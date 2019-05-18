@@ -3,13 +3,6 @@ const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
 const router = express.Router();
 
-
-const genres = [
-    { id: 1, name: "horror", description: "Scary stuff, my dude" }, 
-    { id: 2, name: "comedy", description: "Funny stuff, my dudette"},
-    { id: 3, name: "action", description: "Exciting stuff, my dudes abiding"}
-];
-
 const genreSchema = new mongoose.Schema({
     name: {type: String, required: true, lowercase: true },
     description: {type: String, required: true, maxlength: 500}
@@ -21,7 +14,7 @@ const Genre = mongoose.model('Genre', genreSchema);
 router.get("/", async (req, res) => {
     try{
         const genres = await Genre.find().sort('name');
-    res.send(genres);
+        res.send(genres);
     }
     catch(err){
         res.status(500).send(err.message);
